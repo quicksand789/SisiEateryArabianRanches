@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sisi's Eatery — Arabian Ranches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#0a0a0a;
+    --wine-dark:#000000;
+    --cream:#f5f5f5;
+    --paper:#ffffff;
+    --gold:#333333;
+    --gold-soft:#888888;
+    --ink:#111111;
+    --ink-soft:#666666;
+    --rose:#999999;
+    --rule: rgba(30,30,46,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; }
+  a{ color:inherit; }
+  .brand-wordmark{ font-family:'Cinzel Decorative', serif; font-weight:700; letter-spacing:0.5px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    background:var(--wine);
+    color:var(--cream);
+    border-bottom:1px solid var(--gold);
+  }
+  .topbar .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif; font-size:1.25rem; letter-spacing:0.3px;
+  }
+  .topbar .brand small{
+    display:block; font-family:'Work Sans',sans-serif; font-size:0.62rem;
+    letter-spacing:2.5px; text-transform:uppercase; color:var(--gold-soft); font-weight:500;
+  }
+  .rating-pill{
+    display:flex; align-items:center; gap:6px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(201,169,110,0.50);
+    padding:6px 12px; border-radius:100px; white-space:nowrap;
+    text-decoration:none;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .rating-pill:hover{
+    background:rgba(255,255,255,0.15);
+    transform:translateY(-1px);
+  }
+  .seal{ flex-shrink:0; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 140% at 50% -10%, #2d2d44 0%, var(--wine) 45%, var(--wine-dark) 100%);
+    color:var(--cream);
+    text-align:center;
+    padding:64px 20px 56px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(100,100,100,0.08) 0, transparent 35%),
+      radial-gradient(circle at 80% 75%, rgba(100,100,100,0.06) 0, transparent 40%);
+    pointer-events:none;
+  }
+  .hero .seal-big{ margin:0 auto 22px; display:block; }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    letter-spacing:3px; text-transform:uppercase; color:var(--gold-soft);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(2.8rem, 10vw, 4.6rem);
+    font-weight:400;
+    line-height:1.05;
+    margin-bottom:10px;
+  }
+  .hero .sub{
+    font-size:1rem; color:var(--gold-soft); font-weight:400;
+    letter-spacing:0.4px; margin-bottom:6px;
+  }
+  .hero .loc{
+    font-size:0.85rem; color:rgba(250,243,230,0.75); margin-bottom:30px;
+  }
+  .hero .cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold); color:var(--wine-dark); font-size:1.2rem; font-weight:700; padding:20px 48px; box-shadow:0 8px 32px rgba(201,169,110,0.5); letter-spacing:0.8px; border:2px solid var(--gold);
+    font-family:'Work Sans',sans-serif; font-weight:600; font-size:0.85rem;
+    letter-spacing:0.5px; text-decoration:none;
+    padding:13px 28px; border-radius:100px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .hero .cta:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.25); }
+
+  /* ---------- Category nav ---------- */
+  .catnav{
+    position:sticky; top:57px; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:12px 16px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .catnav::-webkit-scrollbar{ display:none; }
+  .catnav a{
+    display:inline-block;
+    font-size:0.78rem; font-weight:500;
+    text-decoration:none;
+    color:var(--ink-soft);
+    background:transparent;
+    border:1px solid var(--rule);
+    padding:7px 15px; margin-right:8px;
+    border-radius:100px;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .catnav a:hover{ background:var(--wine); color:var(--cream); border-color:var(--wine); }
+
+  /* ---------- Reviews strip ---------- */
+  .reviews{
+    background:var(--wine);
+    color:var(--cream);
+    padding:42px 20px 46px;
+  }
+  .reviews .stat{
+    text-align:center; margin-bottom:28px;
+  }
+  .reviews .stat .num{
+    font-family:'Fraunces',serif; font-size:2.6rem; color:var(--gold-soft);
+  }
+  .reviews .stat .label{
+    font-size:0.75rem; letter-spacing:1.5px; text-transform:uppercase; color:rgba(250,243,230,0.6);
+  }
+  .review-grid{
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    max-width:1000px; margin:0 auto;
+  }
+  .review-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,0,0,0.15);
+    border-radius:6px;
+    padding:20px;
+  }
+  .review-card p{ font-size:0.86rem; line-height:1.55; font-style:italic; color:rgba(250,243,230,0.92); margin:0 0 12px; }
+  .review-card .src{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--gold-soft); letter-spacing:0.5px; }
+
+  /* ---------- Menu sections ---------- */
+  .menu-wrap{ max-width:880px; margin:0 auto; padding:10px 20px 40px; }
+  .category{ padding:44px 0 6px; border-bottom:1px solid var(--rule); scroll-margin-top:130px; }
+  .category:last-child{ border-bottom:none; }
+  .cat-head{ display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+  .cat-head h2{ font-size:1.5rem; font-weight:500; color:var(--wine); }
+  .cat-head .rule{ flex:1; height:1px; background:linear-gradient(to right, var(--gold), transparent); }
+
+  .item{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:4px 16px;
+    padding:16px 0;
+    border-bottom:1px dotted var(--rule);
+  }
+  .item:last-child{ border-bottom:none; }
+  .item .name{ font-family:'Fraunces',serif; font-size:1.05rem; font-weight:500; color:var(--ink); }
+  .item .price{ font-family:'IBM Plex Mono',monospace; font-size:0.92rem; color:var(--gold); align-self:start; white-space:nowrap; }
+  .item .desc{ grid-column:1 / -1; font-size:0.85rem; color:var(--ink-soft); line-height:1.5; max-width:60ch; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--wine); color:rgba(250,243,230,0.85);
+    padding:40px 20px 30px; text-align:center;
+  }
+  footer .seal{ margin:0 auto 14px; }
+  footer h3{ font-size:1.3rem; font-weight:400; color:var(--cream); margin-bottom:6px; }
+  footer .addr{ font-size:0.85rem; margin-bottom:18px; color:var(--gold-soft); }
+  footer .maps-link{
+    display:inline-block; font-size:0.78rem; font-weight:500;
+    text-decoration:none; color:var(--cream); background:var(--wine);
+    padding:9px 20px; border-radius:100px; margin-bottom:20px;
+  }
+  footer .fine{ font-size:0.68rem; color:rgba(250,243,230,0.4); letter-spacing:0.5px; margin-top:18px; }
+
+  /* ---------- Order mode toggle ---------- */
+  .order-mode{
+    display:flex; justify-content:center; gap:0;
+    background:var(--paper); border-bottom:1px solid var(--rule);
+    padding:12px 20px;
+  }
+  .order-mode .seg{
+    display:flex; background:var(--cream); border:1px solid var(--rule); border-radius:100px; padding:3px;
+  }
+  .order-mode button{
+    font-family:'Work Sans',sans-serif; font-size:0.8rem; font-weight:600;
+    border:none; background:transparent; color:var(--ink-soft);
+    padding:8px 20px; border-radius:100px; cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .order-mode button.active{ background:var(--wine); color:var(--cream); }
+
+  /* ---------- Add to cart controls ---------- */
+  .item{ position:relative; }
+  .item .addrow{ grid-column:1/-1; display:flex; align-items:center; gap:10px; margin-top:8px; }
+  .add-btn{
+    font-family:'Work Sans',sans-serif; font-size:0.75rem; font-weight:600;
+    background:#000000; border:1px solid #000000; color:#ffffff;
+    padding:8px 18px; border-radius:100px; cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .add-btn:hover{ background:#222222; transform:translateY(-1px); }
+  .qty-stepper{ display:none; align-items:center; gap:12px; }
+  .qty-stepper.show{ display:flex; }
+  .qty-stepper button{
+    width:26px; height:26px; border-radius:50%; border:1px solid rgba(201,169,110,0.50);
+    background:var(--paper); color:var(--wine); font-size:1rem; line-height:1; cursor:pointer;
+  }
+  .qty-stepper .qty-num{ font-family:'IBM Plex Mono',monospace; font-size:0.9rem; min-width:16px; text-align:center; }
+
+  /* ---------- Floating cart button ---------- */
+  .cart-fab{
+    position:fixed; bottom:22px; right:22px; z-index:60;
+    display:flex; align-items:center; gap:8px;
+    background:var(--wine); color:var(--cream);
+    border:1px solid rgba(201,169,110,0.50); border-radius:100px;
+    padding:14px 20px; box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    cursor:pointer; font-family:'Work Sans',sans-serif; font-weight:600; font-size:0.85rem;
+    transition:transform .15s ease;
+  }
+  .cart-fab:hover{ transform:translateY(-2px); }
+  .cart-fab .count{
+    background:var(--gold); color:var(--wine-dark);
+    font-family:'IBM Plex Mono',monospace; font-size:0.75rem;
+    border-radius:50%; width:22px; height:22px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cart-fab.hidden{ display:none; }
+
+  /* ---------- Cart drawer ---------- */
+  .cart-overlay{
+    position:fixed; inset:0; background:rgba(43,35,32,0.5); z-index:70;
+    display:none; align-items:flex-end; justify-content:center;
+  }
+  .cart-overlay.open{ display:flex; }
+  .cart-drawer{
+    background:var(--paper); width:100%; max-width:520px; max-height:85vh;
+    border-radius:18px 18px 0 0; padding:24px 22px 22px;
+    overflow-y:auto;
+  }
+  .cart-drawer h3{ color:var(--wine); font-size:1.3rem; margin-bottom:4px; }
+  .cart-drawer .mode-note{ font-size:0.78rem; color:var(--ink-soft); margin-bottom:16px; }
+  .cart-line{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 0; border-bottom:1px dotted var(--rule); gap:10px;
+  }
+  .cart-line .cl-name{ font-family:'Fraunces',serif; font-size:0.95rem; flex:1; }
+  .cart-line .cl-controls{ display:flex; align-items:center; gap:8px; }
+  .cart-line .cl-controls button{
+    width:24px; height:24px; border-radius:50%; border:1px solid rgba(201,169,110,0.50);
+    background:transparent; color:var(--wine); cursor:pointer; font-size:0.9rem; line-height:1;
+  }
+  .cart-line .cl-price{ font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color:var(--gold); min-width:66px; text-align:right; }
+  .cart-empty{ text-align:center; color:var(--ink-soft); font-size:0.9rem; padding:30px 0; }
+  .cart-total{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; margin-top:6px; font-family:'Fraunces',serif; font-size:1.15rem; color:var(--wine);
+  }
+  .cart-actions{ display:flex; gap:10px; margin-top:8px; }
+  .cart-actions button{
+    flex:1; padding:13px; border-radius:100px; border:none; cursor:pointer;
+    font-family:'Work Sans',sans-serif; font-weight:600; font-size:0.85rem;
+  }
+  .btn-close{ background:transparent; border:1px solid var(--rule) !important; color:var(--ink-soft); }
+  .btn-whatsapp{ background:#1a1a2e; color:#faf6f0; }
+  .cart-drawer-close{
+    position:sticky; top:0; float:right; background:none; border:none; font-size:1.3rem;
+    color:var(--ink-soft); cursor:pointer; margin-top:-8px;
+  }
+
+  /* ---------- Live update prompt ---------- */
+  .updates-prompt{ text-align:center; padding:20px 4px 4px; }
+  .updates-prompt p{ font-size:0.85rem; color:var(--ink-soft); margin-bottom:14px; }
+  .updates-prompt .row{ display:flex; gap:10px; }
+  .updates-prompt button{
+    flex:1; padding:11px; border-radius:100px; cursor:pointer;
+    font-family:'Work Sans',sans-serif; font-weight:600; font-size:0.82rem; border:1px solid rgba(201,169,110,0.50);
+  }
+  .updates-yes{ background:var(--wine); color:var(--cream); }
+  .updates-no{ background:transparent; color:var(--ink-soft); border-color:var(--rule) !important; }
+
+  /* ---------- Tracker ---------- */
+  .tracker{ padding:6px 2px 4px; }
+  .tracker .eta{
+    text-align:center; margin-bottom:22px;
+  }
+  .tracker .eta .mins{ font-family:'Fraunces',serif; font-size:2.2rem; color:var(--wine); }
+  .tracker .eta .label{ font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); }
+  .track-stages{ display:flex; justify-content:space-between; position:relative; margin:0 6px 8px; }
+  .track-stages::before{
+    content:""; position:absolute; top:13px; left:0; right:0; height:2px; background:var(--rule); z-index:0;
+  }
+  .track-stages .fill{
+    position:absolute; top:13px; left:0; height:2px; background:var(--gold); z-index:1;
+    transition:width 0.6s ease;
+  }
+  .stage{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; flex:1; }
+  .stage .dot{
+    width:26px; height:26px; border-radius:50%; background:var(--paper); border:2px solid var(--rule);
+    display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--ink-soft);
+    transition:background .3s ease, border-color .3s ease, color .3s ease;
+  }
+  .stage.done .dot{ background:var(--wine); border-color:var(--wine); color:var(--cream); }
+  .stage .label{ font-size:0.66rem; text-align:center; margin-top:8px; color:var(--ink-soft); max-width:70px; }
+  .stage.done .label{ color:var(--wine); font-weight:600; }
+  .tracker .note{ text-align:center; font-size:0.72rem; color:var(--ink-soft); margin-top:18px; }
+
+  .social-links{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    margin-top:20px;
+  }
+  .social-links a{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(250,243,230,0.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--cream);
+    text-decoration:none;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .social-links a:hover{
+    background:rgba(255,255,255,0.1);
+    border-color:rgba(250,243,230,0.6);
+  }
+  .social-links svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+  }
+
+  .our-story{
+    background:var(--wine);
+    color:var(--cream);
+    text-align:center;
+    padding:80px 20px 70px;
+  }
+  .our-story .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin-bottom:14px;
+  }
+  .our-story h2{
+    font-family:'Cinzel Decorative', serif;
+    font-size:clamp(2.2rem, 8vw, 3.8rem);
+    font-weight:400;
+    margin-bottom:24px;
+    color:var(--cream);
+  }
+  .our-story .tagline{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.1rem;
+    color:var(--gold-soft);
+    margin-bottom:28px;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .our-story p{
+    font-size:0.92rem;
+    line-height:1.75;
+    color:rgba(250,243,230,0.85);
+    max-width:620px;
+    margin:0 auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <svg class="seal" width="26" height="26" viewBox="0 0 60 60" fill="none">
+      <rect x="2" y="2" width="56" height="56" rx="10" fill="#000000"/>
+      <text x="30" y="41" text-anchor="middle" font-family="'Cinzel Decorative', serif" font-weight="900" font-size="30" fill="#ffffff">S</text>
+    </svg>
+    <span class="brand-wordmark">Sisi's Eatery<small>Arabian Ranches</small></span>
+  </div>
+  <a href="#all-reviews" class="rating-pill" style="text-decoration:none; cursor:pointer;">★ 4.9 · 170 reviews</a>
+</div>
+
+<section class="hero">
+  <svg class="seal-big" width="64" height="64" viewBox="0 0 60 60" fill="none">
+    <rect x="2" y="2" width="56" height="56" rx="12" fill="#000000"/>
+    <text x="30" y="42" text-anchor="middle" font-family="'Cinzel Decorative', serif" font-weight="900" font-size="32" fill="#ffffff">S</text>
+  </svg>
+  <div class="eyebrow">From Vienna, with love</div>
+  <h1 class="brand-wordmark">Sisi's Eatery</h1>
+  <div class="sub">Café · Patisserie · Kitchen</div>
+  <div class="loc">Arabian Ranches, Dubai</div>
+  <a class="cta" href="#fresh-juices">See the menu ↓</a>
+  <div class="social-links">
+    <a href="https://instagram.com/sisiseatery" target="_blank" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://tiktok.com/@sisiseatery" target="_blank" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+    </a>
+    <a href="https://facebook.com/sisiseatery" target="_blank" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    
+  </div>
+</section>
+
+<nav class="catnav" id="catnav">
+  <a href="#our-story" style="background:var(--wine);color:var(--cream);border-color:var(--wine);">Our Story</a>
+  <a href="#reviews" style="background:var(--wine);color:var(--cream);border-color:var(--wine);">Reviews</a>
+</nav>
+
+<div class="order-mode">
+  <div class="seg">
+    <button id="mode-dinein" class="active" onclick="setMode('Dine-in')">Dine-in</button>
+    <button id="mode-takeaway" onclick="setMode('Pickup')">Pickup</button>
+    <button id="mode-delivery" onclick="setMode('Delivery')">Delivery</button>
+  </div>
+</div>
+<div id="tableBadge" style="display:none; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--wine); background:var(--paper); padding:6px 0 12px;">Ordering from Table <span id="tableNum"></span></div>
+
+
+<section class="our-story" id="our-story">
+  <div class="eyebrow">From Vienna, with love</div>
+  <h2>Our Story</h2>
+  <div class="tagline">Inspired by the glamorous yet untamed, edgy yet loving, Empress Sisi.</div>
+  <p>Inspired by the charming soul of Vienna &amp; by the spirit of the legendary Empress Sisi, Sisi's Eatery is a cultural culinary journey made to whomever dares to explore. Austria's capital is endearingly charming, known for its streets paved of culture, history, music and art. From there, came the idea of bringing an Austrian flair to the world.</p>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="reviews-hero">
+    <div class="reviews-badge">★★★★★ Rated 4.9 on Google</div>
+    <h2 class="reviews-title">Loved by 170+ guests</h2>
+    <p class="reviews-sub">Real reviews from real diners at Arabian Ranches</p>
+  </div>
+
+  <div class="review-grid" id="featuredReviews">
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">M</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Marcus Schumacher</div>
+          <div class="reviewer-badge">Local Guide · 71 reviews · 309 photos · 3 weeks ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Amazing Austrian food variety at fair prices. A place to go at your Arabian Ranches doorstep when downtown is too far. Family friendly staff making you always feel welcomed. Muhamed always welcomes us with a great smile and open, warm heart.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">A</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Ax_ءبي</div>
+          <div class="reviewer-badge">Local Guide · 122 reviews · 101 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Was expecting teething issues having just opened. Absolutely not! Stunning food... had the Schnitzel, Kunafeh Prawns and the melt in the mouth Lotus french toast.... yummmmy!!! Please don't change the chefs.... great experience and service with Ravindu.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">C</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Corydon Lowde</div>
+          <div class="reviewer-badge">5 reviews · 2 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>We had an amazing breakfast (all you can eat!) at Sisi's and it was one of the best experiences of our holiday. Mohamed our waiter was very attentive and kind, and the food was brilliant. You have to have the English tea; it's an art form here! Our new favourite place.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">S</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Stef</div>
+          <div class="reviewer-badge">Local Guide · 119 reviews · 1,574 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Very nice to see they opened in this location. Very friendly staff same as like Dubai hills branch. Very nice croissants for breakfast, love the ham and cheese one. Lovely salads and their schnitzel are best in town. This will be my place.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">R</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Rita Hleyhel</div>
+          <div class="reviewer-badge">Local Guide · 84 reviews · 186 photos · 4 weeks ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Beautiful place with nice dessert options. Had the lemon blueberry cake, mille feuille, Arabic Coffee, Cappuccino and Americano. All of it was very tasty. The service was great. Big thanks to the waitresses.</p>
+      <div class="src">Google Review</div>
+    </div>
+  </div>
+
+
+</section>
+
+<div class="menu-wrap" id="menu-wrap"></div>
+
+
+<!-- ALL REVIEWS SECTION -->
+<section class="reviews" id="all-reviews" style="background:var(--wine); padding:60px 20px 56px; scroll-margin-top:130px;">
+  <div class="reviews-hero">
+    <div class="reviews-badge">★★★★★ Rated 4.9 on Google</div>
+    <h2 class="reviews-title">All 170+ Reviews</h2>
+    <p class="reviews-sub">What our guests are saying about Sisi's Eatery</p>
+  </div>
+
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">R</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Rita Hleyhel</div>
+          <div class="reviewer-badge">Local Guide · 84 reviews · 186 photos · 4 weeks ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Beautiful place with nice dessert options. Had the lemon blueberry cake, mille feuille, Arabic Coffee, Cappuccino and Americano. All of it was very tasty. The service was great. Big thanks to the waitresses.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">M</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Marcus Schumacher</div>
+          <div class="reviewer-badge">Local Guide · 71 reviews · 309 photos · 3 weeks ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Amazing Austrian food variety at fair prices. A place to go at your Arabian Ranches doorstep when downtown is too far. Family friendly staff making you always feel welcomed. Muhamed always welcomes us with a great smile and open, warm heart.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">C</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">chanzhe lau</div>
+          <div class="reviewer-badge">Local Guide · 17 reviews · 5 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Came here for breakfast. They offer unlimited breakfast for 89. Great food quality, food presentation was excellent. Great coffee too. Top notch customer service, Rose and Chue were very attentive and super friendly, love their energy. Highly recommended.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">M</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Michael Hansen</div>
+          <div class="reviewer-badge">Local Guide · 155 reviews · 109 photos · 3 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>We went for the first time to Sisi's to try the all you can eat breakfast. Food was amazing, we shared few dishes since portions are not small, which would be my only "complaint" not that I am complaining, but could be nice with smaller portions to try more variety.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">S</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Stef</div>
+          <div class="reviewer-badge">Local Guide · 119 reviews · 1,574 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Very nice to see they opened in this location. Very friendly staff same as like Dubai hills branch. Very nice croissants for breakfast, love the ham and cheese one. Lovely salads and their schnitzel are best in town. This will be my place.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">V</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Vikesh Singh</div>
+          <div class="reviewer-badge">Local Guide · 12 reviews · 8 photos · 4 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>An absolutely wonderful experience! Nisal provided amazing service throughout our visit very attentive, warm, and professional. A very thoughtful highlight was the complimentary cake offered for Women's Day.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">A</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Ax_ءبي</div>
+          <div class="reviewer-badge">Local Guide · 122 reviews · 101 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Was expecting teething issues having just opened. Absolutely not! Stunning food... had the Schnitzel, Kunafeh Prawns and the melt in the mouth Lotus french toast.... yummmmy!!! Please don't change the chefs.... great experience and service with Ravindu.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">W</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">winny mindaro Vlog</div>
+          <div class="reviewer-badge">4 reviews · 2 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Absolutely loved our experience at Sisi's Eatery, Arabian Ranches. The food was yummy and full of flavor—highly recommended! Kimberly was incredibly accommodating and provided such lovely service. Will definitely be back.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">A</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Aaisha Patelia</div>
+          <div class="reviewer-badge">5 reviews · 3 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Really lovely service. The staff were super friendly and helpful, particularly one of the waitresses (Rose). Enjoyed their carrot cake and bread.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">L</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Lujain</div>
+          <div class="reviewer-badge">1 review · 1 photo · 3 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>The place is so nice and calm and there food is so good also the staff is very kind especially Mahmoud al ansari and Niruta I definitely recommend coming to this place.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">C</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Corydon Lowde</div>
+          <div class="reviewer-badge">5 reviews · 2 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>We had an amazing breakfast (all you can eat!) at Sisi's and it was one of the best experiences of our holiday. Mohamed our waiter was very attentive and kind, and the food was brilliant. You have to have the English tea; it's an art form here! Our new favourite place.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">P</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Phiona Atuhire</div>
+          <div class="reviewer-badge">3 reviews · 1 photo · 3 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Delicious food, Amazing coffee, All staff are wonderful and super courteous. Food: 5★</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">M</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Mohamed Alaa</div>
+          <div class="reviewer-badge">Local Guide · 42 reviews · 12 photos · 2 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>The restaurant was excellent. The food was delicious and of high quality, and the service was fast and efficient. The staff were friendly and very helpful throughout the visit. Overall, it was a great dining experience, and I would highly recommend it.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">S</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">SHABI NYX</div>
+          <div class="reviewer-badge">Local Guide · 77 reviews · 87 photos · 3 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Very nice authentic German / Austrian food. Staff were very friendly, Nisal was very helpful and attentive. Big complement to the chef Brandon… best Kaiserschmarn & Schnitzel in town!</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">K</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Kosmic Medüza</div>
+          <div class="reviewer-badge">Local Guide · 12 reviews · 7 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Very nice experience and the atmosphere is happier with Muhamed's smile!</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">S</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Sara Mokdad</div>
+          <div class="reviewer-badge">Local Guide · 29 reviews · a month ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>We just tried it today for the first time and highly recommend it. The food was so good and the staff are extremely friendly. A special thank you to Kimberly for her amazing work.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">G</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Glace M.</div>
+          <div class="reviewer-badge">Local Guide · 30 reviews · 21 photos · 5 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Finally, a restaurant in Arabian Ranches that offers reasonably priced and amazing food. I keep coming back for the unlimited breakfast which is available every day, including weekends.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">Y</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Yusuf Khan</div>
+          <div class="reviewer-badge">Local Guide · 113 reviews · 841 photos · 2 weeks ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>A new addition to our neighbourhood. Finally tried it out, and was better than I expected. Excellent service and suggestions from our server Rona. Schnitzels for the next time, and the extensive dessert menu beckons us too.</p>
+      <div class="src">Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="reviewer">
+        <div class="avatar">K</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">karen chua</div>
+          <div class="reviewer-badge">11 reviews · 2 photos · 4 months ago</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p>Such an exceptional service by Kimberly! She's on top of her league. Great service unlocked.</p>
+      <div class="src">Google Review</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="seal" width="46" height="46" viewBox="0 0 60 60" fill="none">
+    <rect x="2" y="2" width="56" height="56" rx="10" fill="#000000"/>
+    <text x="30" y="41" text-anchor="middle" font-family="'Cinzel Decorative', serif" font-weight="900" font-size="30" fill="#ffffff">S</text>
+  </svg>
+  <h3 class="brand-wordmark">Sisi's Eatery</h3>
+  <div class="addr">Arabian Ranches, Dubai · Daily 7:00 AM – 11:30 PM</div>
+  <a class="maps-link" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x3e5f6fc1b756afd1:0x496c06050e29a5ea"  >View on Google Maps</a>
+  <div class="fine">A concept inspired by Empress Sisi · #fromviennawithlove</div>
+</footer>
+
+<div class="cart-fab hidden" id="cartFab" onclick="openCart()">
+  <span>🛒 View order</span>
+  <span class="count" id="cartCount">0</span>
+</div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
+  <div class="cart-drawer">
+    <button class="cart-drawer-close" onclick="closeCart()">✕</button>
+    <h3>Your order</h3>
+    <div class="mode-note" id="cartModeNote">Dine-in</div>
+    <div id="cartLines"></div>
+    <div class="cart-total" id="cartTotal"></div>
+    <div class="cart-actions">
+      <button class="btn-close" onclick="closeCart()">Keep browsing</button>
+      <button class="btn-whatsapp" onclick="sendOrderToWhatsapp()">Send order via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<div class="cart-overlay" id="trackOverlay" onclick="if(event.target===this) closeTracker()">
+  <div class="cart-drawer">
+    <button class="cart-drawer-close" onclick="closeTracker()">✕</button>
+
+    <div id="updatesPrompt" class="updates-prompt">
+      <h3>Order sent!</h3>
+      <p>Want live updates on how your order is coming along?</p>
+      <div class="row">
+        <button class="updates-no" onclick="declineTracking()">No thanks</button>
+        <button class="updates-yes" onclick="startTracking()">Yes, track it</button>
+      </div>
+    </div>
+
+    <div id="trackerView" class="tracker" style="display:none;">
+      <h3 style="text-align:center;">Your order</h3>
+      <div class="eta">
+        <div class="mins" id="etaMins">30 min</div>
+        <div class="label" id="etaLabel">Estimated time</div>
+      </div>
+      <div class="track-stages" id="trackStages">
+        <div class="fill" id="trackFill" style="width:0%;"></div>
+        <div class="stage" id="st-0"><div class="dot">1</div><div class="label">Order received</div></div>
+        <div class="stage" id="st-1"><div class="dot">2</div><div class="label">Preparing</div></div>
+        <div class="stage" id="st-2"><div class="dot">3</div><div class="label">On the way</div></div>
+        <div class="stage" id="st-3"><div class="dot">4</div><div class="label">Arrived</div></div>
+      </div>
+      <div class="note">Simulated preview — connect this to live kitchen/courier updates once you're onboarded.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// TODO: replace with the restaurant's actual WhatsApp number (country code, no + or spaces)
+const RESTAURANT_WHATSAPP = "971500000000";
+
+const MENU = [
+  { id:"breakfast", name:"Breakfast", items:[
+    {n:"Eggs Your Style", d:"Eggs or whites any way you like with one add-on, paired with freshly baked bread. Omelette | Sunny Side Up | Scrambled | Sisi's Menemen.", p:59},
+    {n:"Eggs Benedict — Classic", d:"Brioche muffin, poached eggs topped with airy hollandaise, with turkey bacon.", p:65},
+    {n:"Eggs Benedict — Florentine", d:"Brioche muffin, poached eggs topped with airy hollandaise, with spinach and smoked salmon.", p:69},
+    {n:"Eggs Benedict — Vegetarian", d:"Brioche muffin, poached eggs topped with airy hollandaise, with mushrooms & spinach.", p:65},
+    {n:"Fiery Shakshuka", d:"Two eggs over sizzling spicy smokey tomato base sprinkled with pine nuts. With feta +3.", p:65},
+    {n:"Tiroler Gröstl", d:"A rustic Austrian skillet of La Ratte potatoes, beef tenderloin, turkey bacon, onions, topped with a perfectly fried egg and fresh herbs.", p:78},
+    {n:"Sisi's Blueberry Pancakes", d:"Fluffy pancakes with rich blueberry compote, cream cheese, garnished with fresh blueberries, edible flowers, served with maple syrup.", p:68},
+    {n:"Zucchini Avo Pancake", d:"Zucchini pancakes with fresh avocado mash, grilled halloumi cubes, topped with egg your style and garnished with pomegranate seeds, herb cream cheese with a touch of beetroot hummus.", p:58},
+    {n:"Sunny Halloumi Pancake", d:"Halloumi pancakes, juicy cherry tomatoes, finished with a drizzle of balsamic glaze, chives, and a hint of chilli flakes.", p:65},
+    {n:"Crème Brûlée French Toast", d:"Golden brioche French toast topped with a delicate crème brûlée, fresh raspberries and blueberries, crunchy pistachios, smooth vanilla sauce, and a scoop of vanilla ice cream.", p:68},
+    {n:"Palatschinken", d:"Thin, delicate Austrian pancakes filled with apricot marmalade and served with fresh raspberries, blueberries, blackberries, sliced pistachios, and a touch of fresh mint.", p:55},
+    {n:"Beetroot Charcoal Ciabatta", d:"Beetroot hummus on a charcoal ciabatta, topped with avocado slices, feta cheese and pomegranate seeds. With poached egg +4.", p:45},
+    {n:"Avocado On Sourdough", d:"Toasted sourdough topped with avocado, cherry tomatoes and feta. With poached egg +3.", p:62},
+    {n:"Granola On A Plate", d:"Toasted granola with nuts and fruits of the forest, served with Greek yogurt, drizzled with Austrian honey.", p:55},
+    {n:"Sisi's Acai Bowl", d:"A blend of acai puree, homemade granola, fresh berries, dragon fruit, banana and strawberry, garnished with edible flowers.", p:55},
+    {n:"Oats Pudding", d:"Creamy oats blended with coconut milk and whipping cream, peanut butter and honey, topped with fresh strawberries, blueberries, chia seeds and sliced pistachios.", p:55},
+    {n:"English Breakfast", d:"Eggs your style, hash browns, cheese platter, baked beans, grilled asparagus, sautéed mushrooms with pickled onions, chicken sausage and turkey bacon, served with jam, butter and mixed bread. Good for sharing.", p:95},
+    {n:"Mediterranean Breakfast", d:"Eggs your style with cucumber, cherry tomato, radish, grilled halloumi, green & kalamata olives, feta, beetroot hummus, grilled zucchini & asparagus, zaatar in olive oil, honey, jam, butter and mixed bread. Good for sharing.", p:85},
+    {n:"Taste of Austria Breakfast", d:"Eggs your style, cold cuts, cheese, liptauer and home-made pickles, with freshly baked bread, Austrian jam, honey and butter. With smoked salmon or chicken sausage +10.", p:89},
+  ]},
+
+  { id:"specialty-coffee", name:"Specialty Coffee", items:[
+    {n:"Espresso", d:"A bold and intense flavor of our freshly brewed espresso.", p:21},
+    {n:"Macchiato", d:"A classic coffee beverage made with a shot of espresso and a dollop of frothy milk.", p:24},
+    {n:"Cortado", d:"Rich coffee and creamy milk, crafted from freshly brewed espresso and steamed milk.", p:24},
+    {n:"Long Black", d:"A shot of espresso poured over hot water, similar to an Americano.", p:24},
+    {n:"Latte", d:"A coffee-based drink made by combining espresso and milk.", p:30},
+    {n:"Flat White", d:"Made with a double shot of espresso and steamed milk.", p:30},
+    {n:"Cappuccino Melange", d:"Cappuccino Melange.", p:30},
+    {n:"Mocha", d:"Made with espresso, steamed milk, and chocolate.", p:32},
+    {n:"White Mocha", d:"Made with espresso shots, steamed milk and velvety whipped cream.", p:32},
+    {n:"V60", d:"A flavorful pour-over coffee made with freshly ground coffee beans and hot water, brewed using a V60 dripper.", p:45},
+    {n:"Chemex", d:"Pour-over coffee method that delivers a smooth and aromatic cup of coffee.", p:45},
+  ]},
+  { id:"spanish-latte", name:"Spanish Latte", items:[
+    {n:"Spanish Latte", d:"A shot of espresso with hot condensed milk adds a creamy sweetness to the coffee.", p:35},
+    {n:"Pistachio Spanish Latte", d:"Spanish latte with pistachio flavor.", p:35},
+  ]},
+  { id:"vegan-latte", name:"Vegan Latte", items:[
+    {n:"Green Matcha Latte", d:"Organic Japanese green matcha, coconut milk and honey.", p:40},
+  ]},
+  { id:"organic-tea", name:"Organic Tea", items:[
+    {n:"Majestic Earl Grey Tea", d:"A classic black tea infused with fragrant bergamot orange.", p:32},
+    {n:"Apple Elderflower Tea", d:"A refreshing infusion of apple, elderflower and hibiscus.", p:32},
+    {n:"Herbal Bliss Tea", d:"A herbal tisane featuring chamomile and rosemary.", p:32},
+    {n:"Spring Green Tea", d:"A very elegant and aromatic green tea with soft nutty notes.", p:32},
+    {n:"Berries Of The Forest Tea", d:"A fusion of flavorful berries from the forest.", p:32},
+    {n:"Assam Breakfast Tea", d:"A strong and full-bodied blend of comforting malt and barley notes.", p:32},
+  ]},
+  { id:"organic-ice-tea", name:"Organic Ice Tea", items:[
+    {n:"Sapphire Jasmine Ice Tea", d:"", p:57},
+    {n:"Apple Elderflower Ice Tea", d:"", p:57},
+    {n:"Berries Of The Forest Ice Tea", d:"", p:57},
+  ]},
+  { id:"fresh-juices", name:"Fresh Juices", items:[
+    {n:"Green Apple Juice", d:"Refreshing and hydrating beverage made from freshly pressed green apple.", p:35},
+    {n:"Orange Juice", d:"Made with freshly squeezed oranges, a great source of vitamin C.", p:35},
+    {n:"Carrot Juice", d:"Made with freshly squeezed carrots, rich in vitamin A and other essential nutrients.", p:35},
+  ]},
+  { id:"vegan-blends", name:"Vegan Blends", items:[
+    {n:"Banana Matcha", d:"An energizing blend of banana, oats and matcha with a finishing dash of spinach.", p:52},
+    {n:"Berry Acai", d:"Detoxifying frozen blend of acai, berries and banana.", p:48},
+  ]},
+  { id:"mocktails", name:"Mocktails", items:[
+    {n:"Strawberry Mojito", d:"Strawberry and sparkling notes of mint and lemon.", p:45},
+    {n:"Wildberries Mojito", d:"Bavarian berries with sparkling notes of mint and lime.", p:45},
+    {n:"Peachy Illusion", d:"Refreshing blend of sweet peach, zesty lime and fresh mint.", p:45},
+    {n:"Superfruit Mojito", d:"Vibrant mojito infused with the exotic Brazilian superfruit jaboticaba.", p:45},
+    {n:"Passionfruit Mojito", d:"Passion fruit and sparkling notes of mint and lemon.", p:45},
+  ]},
+  { id:"combos", name:"Combos", items:[
+    {n:"Coffee & Croissant Combo", d:"Your choice of coffee and croissant.", p:37},
+  ]},
+  { id:"soups-starters", name:"Soups And Starters", items:[
+    {n:"Pumpkin Soup", d:"Roasted pumpkin cream soup, served with Austrian pumpkin seed oil.", p:49},
+    {n:"Roasted Tomato Soup", d:"A rich and tangy creamy creation with herb and basil notes.", p:49},
+    {n:"Onion Soup", d:"Rich caramelised onion soup topped with toasted sourdough ciabatta, melted mozzarella, and a sprinkle of fresh chives.", p:49},
+    {n:"Halloumi Bites", d:"Deep fried halloumi cubes, topped with pomegranate seeds, balsamic glaze and zaatar yogurt.", p:49},
+    {n:"Stuffed Cheesy Garlic Bread", d:"Crusty bread stuffed with herby melted cheese trio, served with Austrian honey.", p:45},
+    {n:"Cheese Spinach Dip", d:"A creamy blend of spinach, mozzarella, and parmesan with a touch of artichoke, served warm with crispy garlic bread.", p:45},
+    {n:"Beets Arancini", d:"Crispy beetroot filled with feta cheese, served over peppery rocket leaves with marinara sauce and a balsamic glaze.", p:45},
+    {n:"Kunafa Shrimp", d:"Juicy shrimp wrapped in crispy kunafa pastry, served with velvety beetroot hummus and tender beetroot cubes.", p:55},
+    {n:"Sweet Potato Fries", d:"Crispy sweet potato fries served with a side of zesty lemon mayo.", p:32},
+    {n:"Truffle Fries", d:"With parmesan sprinkles.", p:30},
+  ]},
+  { id:"artisanal-bread", name:"Artisanal Bread", items:[
+    {n:"Kornspitz", d:"Six pieces of Austrian bread roll, renowned for its hearty taste, rustic appearance, and delightful crunch.", p:30},
+    {n:"Viennese Rye Loaf", d:"Austria's signature rye loaf.", p:24},
+    {n:"Mustard Loaf", d:"Artisanal mustard loaf.", p:22},
+    {n:"Kaiser Roll", d:"Austrian artisanal hand-made bread.", p:30},
+    {n:"Soft Roll", d:"Baked goods.", p:30},
+    {n:"Plain Pretzel", d:"A brittle, glazed, salted biscuit of German or Alsatian origin — indulge in the classic crunch of a plain pretzel.", p:29},
+    {n:"Sourdough Ciabatta Loaf", d:"Freshly baked sourdough ciabatta.", p:17},
+    {n:"Salzstangerl", d:"Austrian artisanal hand-made bread, baked to golden perfection.", p:30},
+  ]},
+  { id:"chocolate-cookies", name:"Chocolate & Cookies", items:[
+    {n:"Sacher Cookie", d:"A box of chocolate cookie with apricot jam, topped with chocolate fudge stamp.", p:72},
+    {n:"Heart Linzer Cookies", d:"12 pieces of Heart Linzer cookies filled with raspberry jam.", p:54},
+  ]},
+  { id:"croissant", name:"Croissant", items:[
+    {n:"Classic Croissant", d:"Instant yeast, egg, flour and whole milk.", p:20},
+    {n:"Cinnamon Roll Croissant", d:"Flaky croissant swirled with cinnamon sugar.", p:17},
+    {n:"Almond Croissant", d:"Buttery pastry filled with almond paste, topped with sliced almonds.", p:29},
+  ]},
+  { id:"sandwiches", name:"Sandwiches", items:[
+    {n:"Chicken Avo Ciabatta", d:"Fresh grilled chicken breast with avocado, lemon-mayo, rucola, emmental cheese in ciabatta bread, served with our signature fries.", p:69},
+    {n:"Chicken Caesar Burger", d:"Fried chicken breast served in our home-made sesame soft brioche bun with Caesar sauce, lettuce, cheese and signature fries.", p:69},
+    {n:"Wagyu Cheeseburger", d:"Gourmet wagyu beef patty with mountain cheese, honey mustard sauce, king oyster mushrooms, caramelized onions in our artisanal sesame brioche bun, served with our signature fries.", p:95},
+    {n:"Truffle Wagyu Sliders", d:"Smashed beef patties with arugula leaves, tomato, cheese and truffle cream served in our homemade sesame soft brioche bun.", p:65},
+    {n:"Chicken Schnitzel Club", d:"Signature mustard bread layered with chicken schnitzel, crispy bacon, veggie ribbons and zesty lemon mayo, served with our signature fries.", p:89},
+    {n:"Chicken Schnitzel Sliders", d:"Chicken schnitzel, arugula leaves, tomato and lemon mayo in a soft brioche sesame bun.", p:55},
+  ]},
+  { id:"salad-bowls", name:"Healthy Salad Bowls", items:[
+    {n:"Beets Kale Salad", d:"Fresh kale, edamame, avocado, baby rocca, cherry tomato, feta cheese, celery root, butternut squash and cooked beetroot, garnished with pomegranate seeds and caramelized walnuts in our home-made honey mustard dressing.", p:68},
+    {n:"Burrata Tomato Trio", d:"Creamy burrata cheese drizzled with olive oil and pesto, served with cherry tomatoes, avocado, fresh basil, rosemary, thyme, pine nuts, and a splash of balsamic glaze.", p:89},
+    {n:"Chicken Mango Salad", d:"Fresh kale with avocado, mango chunks, sweet corn and walnuts, topped with grilled chicken marinated in homemade teriyaki sauce and a zesty citrus dressing.", p:75},
+    {n:"Avocado Caesar", d:"A classic Caesar salad featuring savory turkey bacon, avocado and a crispy parmesan topping tossed in a creamy Caesar dressing.", p:65},
+    {n:"Sizzling Steak Salad", d:"Grilled tender beef served with romaine lettuce, cherry tomatoes, creamy feta, avocado, baby corn, fried onions, corn on the cob, walnuts and chives, with BBQ sauce on top.", p:95},
+    {n:"Goat Quinoa Salad", d:"A wholesome mix of quinoa, goat cheese, kale, avocado, fresh strawberries and pomegranate seeds, tossed with caramelized walnuts and house dressing.", p:72},
+    {n:"Tuna Niçoise", d:"A vibrant salad featuring tender tuna, crisp greens, boiled eggs, olives and baby potatoes, drizzled with tangy vinaigrette.", p:75},
+    {n:"Add-on: Grilled Chicken / Grilled Shrimps / Grilled Halloumi", d:"Add to any salad.", p:20},
+    {n:"Add-on: Beef Tenderloin / Avocado / Smoked or Grilled Salmon", d:"Add to any salad.", p:25},
+  ]},
+  { id:"pastas", name:"Pastas", items:[
+    {n:"Truffle Parmesan", d:"Rigatoni pasta cooked in our creamy special black truffle salsa with parmesan cheese, topped with truffle shavings.", p:95},
+    {n:"Lasagne", d:"Classic layers of rich tomato, meat sauce, creamy béchamel and pasta sheets baked to perfection.", p:89},
+    {n:"Fusilli Pesto", d:"Fusilli pasta sautéed in home-made pesto sauce, roasted pine nuts, parmesan and cherry tomato. Add grilled chicken or shrimps +20.", p:85},
+    {n:"Käse Spätzle", d:"Traditional Austrian egg noodles tossed in melted cheese, topped with crispy fried onions and chives, served with a side of iceberg salad and house dressing.", p:80},
+    {n:"Chicken Schnitzel Spaghetti", d:"Chicken schnitzel paired with spaghetti in a lemon garlic cream sauce.", p:89},
+    {n:"Chicken Mushroom Penne", d:"Penne pasta in a creamy Alfredo sauce with tender chicken cubes, finished with parmesan cheese.", p:75},
+    {n:"Burrata Arrabbiata", d:"Spaghetti tossed in spicy marinara with cherry tomatoes, topped with fresh burrata and basil leaves.", p:85},
+  ]},
+  { id:"mains", name:"Mains", items:[
+    {n:"Healthy Grilled Chicken", d:"Fresh grilled chicken breast with a side of La Ratte potatoes, fresh vegetables and a touch of citrusy lime, served with habanero mango sauce.", p:99},
+    {n:"Hearty Salmon", d:"Pan-fried Scottish salmon fillet marinated in lemon butter sauce, served with celery mash and steamed broccolini.", p:129},
+    {n:"Tenderloin Steak", d:"Grain-fed grilled tenderloin over mashed potatoes, steamed string beans, honey glazed carrots and drizzled with a herby gravy.", p:135},
+    {n:"Mediterranean Seabass", d:"Pan-fried seabass dressed in lemon butter, served on a bed of artisanal veggie fregola, drizzled with basil oil.", p:139},
+    {n:"Steak And Fries", d:"Grilled ribeye steak served with Sisi's secret mustard sauce alongside signature fries with parmesan.", p:125},
+    {n:"Salmon Teriyaki Bowl", d:"Salmon in a tasty teriyaki sauce with black rice, cherry tomatoes, broccoli, edamame, avocado and asparagus, topped with sesame seeds and a drizzle of special dressing.", p:125},
+    {n:"Tiroler Gröstl", d:"A rustic Austrian skillet of La Ratte potatoes, beef tenderloin, turkey bacon, onions, topped with a perfectly fried egg and fresh herbs.", p:78},
+    {n:"Beef Goulash", d:"Slow-cooked paprika beef stew, served with soft, buttery homemade spätzle.", p:75},
+    {n:"Add-on: Signature Fries / Celery Mash / Steamed Broccolini / Mashed Potato / Basmati Rice / Honey Glazed Carrots", d:"Choose a side to add.", p:20},
+    {n:"Add-on: Truffle Fries", d:"With parmesan sprinkles.", p:30},
+    {n:"Add-on: Spaetzle Pasta", d:"", p:40},
+  ]},
+  { id:"schnitzel", name:"Schnitzel", items:[
+    {n:"Chicken Schnitzel", d:"Hühnchen Schnitzel. Served with a choice of traditional potato salad or signature fries.", p:109},
+    {n:"Chicken Truffle Mushroom", d:"Huhn mit Trüffel und Pilzen. Served with a choice of traditional potato salad or signature fries.", p:125},
+    {n:"Veal Schnitzel", d:"Kalb Schnitzel. Served with a choice of traditional potato salad or signature fries.", p:139},
+    {n:"Veal Butter Schnitzel", d:"Kalbsbutter Schnitzel. Served with a choice of traditional potato salad or signature fries.", p:105},
+    {n:"Turkey Schnitzel", d:"Puten Schnitzel. Served with a choice of traditional potato salad or signature fries.", p:120},
+    {n:"Fish Schnitzel", d:"Fisch Schnitzel. Served with a choice of traditional potato salad or signature fries.", p:125},
+    {n:"Katsu Curry", d:"Served with a choice of traditional potato salad or signature fries.", p:99},
+    {n:"Cordon Bleu", d:"Served with a choice of traditional potato salad or signature fries.", p:105},
+  ]},
+  { id:"desserts", name:"Desserts", items:[
+    {n:"Kaiserschmarrn", d:"Austrian-style shredded pancake with raisins, served with your choice of plum compote, cherry compote, chocolate hazelnut spread or apple mousse.", p:55},
+    {n:"Lotus Kaiserschmarrn", d:"Austrian-style shredded pancake served with lotus & toffee sauce, vanilla ice cream with mixed berries.", p:69},
+    {n:"Chocolate Kaiserschmarrn", d:"Austrian-style shredded pancake served with Nutella chocolate sauce, vanilla ice cream with caramelized banana.", p:69},
+    {n:"Chocolate Hazelnut Knödel", d:"Warm fluffy dumplings filled with hazelnut chocolate, served with mixed berry compote and vanilla ice cream.", p:59},
+    {n:"Dark Chocolate Pudding", d:"Steamed dark chocolate hazelnut pudding served with whipped cream and vanilla ice cream.", p:55},
+    {n:"Sisi's Lotus French Toast", d:"Lotus stuffed French toast topped with caramelized bananas and vanilla ice cream, served with white chocolate and lotus sauce.", p:73},
+    {n:"Apple Strudel", d:"Flakey layers of strudel with spiced apple and vanilla cream.", p:54},
+    {n:"San Sebastian Cheesecake", d:"Creamy baked cheesecake served with melted milk, ruby or dark chocolate.", p:59},
+    {n:"Viennese Chocolate Truffle Cake Slice", d:"Layers of rich chocolate truffle sponge, velvety milk chocolate cream and luxurious chocolate ganache, topped with cocoa powder and dark chocolate.", p:54},
+    {n:"Engadiner Torte", d:"Soft almond tart filled with caramel and walnuts.", p:36},
+    {n:"Classic Milk Cake", d:"A light sponge cake soaked in three types of milk, topped with whipped cream and strawberry.", p:66},
+    {n:"Sacher Cake", d:"Original Sacher cake sponge layered with apricot jam and glazed with a special chocolate glaze.", p:54},
+  ]},
+  { id:"summer-cakes", name:"Sisi's Summer Cakes", items:[
+    {n:"Very Berry Mille Feuille Slice", d:"Baked puff pastry filled with white chocolate, honey whipped cream, berry pippin, soft berry jelly and blackcurrant cremux, topped with fresh berries.", p:59},
+    {n:"Very Berry Mille Feuille", d:"Baked puff pastry filled with white chocolate, honey whipped cream, raspberry pippin, soft berry jelly and blackcurrant cream, topped with fresh berries. Whole cake.", p:192},
+    {n:"Strawberry Shortcake Slice", d:"Light Japanese sponge, layered with diplomat cream and fresh strawberries, topped with strawberry macaroons and fresh strawberries.", p:66},
+  ]},
+  { id:"full-cakes", name:"Full Cakes", items:[
+    {n:"Mango Tart", d:"Decadent mango tart with a buttery crust.", p:240},
+    {n:"Lemon Tart", d:"Decadent lemon tart with a buttery crust.", p:240},
+    {n:"Rose Pistachio Tart", d:"Decadent rose tart layered with pistachio filling and a buttery crust.", p:240},
+    {n:"Plum Crumble Tart", d:"Plum tart infused with almond crumble, topped with icing sugar.", p:150},
+    {n:"Apricot Crumble Tart", d:"Apricot tart infused with almond crumble, topped with icing sugar.", p:150},
+    {n:"San Sebastian Cheesecake", d:"Creamy San Sebastian cheesecake. Whole cake.", p:420},
+    {n:"Carrot Cake", d:"A moist and spiced cake made with grated carrots, topped with cream cheese frosting.", p:215},
+    {n:"Viennese Gugelhupf", d:"Viennese marbled classic sponge cake.", p:180},
+    {n:"Apple Strudel Loaf", d:"Walnut sponge infused with cinnamon and fresh apples.", p:150},
+    {n:"Sacher Loaf", d:"Chocolate sponge infused with cacao and apricots.", p:150},
+    {n:"Sacher Cake Traditional", d:"Original Sacher cake sponge layered with apricot jam and glazed with a special chocolate glaze. Whole cake.", p:186},
+    {n:"Sticky Date Bundt", d:"A moist date cake with toffee sauce.", p:300},
+    {n:"Plum Loaf", d:"Vanilla sponge infused with prunes and almonds.", p:150},
+  ]},
+];
+
+const navEl = document.getElementById('catnav');
+const wrapEl = document.getElementById('menu-wrap');
+
+MENU.forEach(cat => {
+  const a = document.createElement('a');
+  a.href = '#' + cat.id;
+  a.textContent = cat.name;
+  navEl.appendChild(a);
+
+  const section = document.createElement('section');
+  section.className = 'category';
+  section.id = cat.id;
+
+  const head = document.createElement('div');
+  head.className = 'cat-head';
+  head.innerHTML = `<h2>${cat.name}</h2><div class="rule"></div>`;
+  section.appendChild(head);
+
+  cat.items.forEach(it => {
+    const itemId = (cat.id + '__' + it.n).replace(/[^a-zA-Z0-9]/g,'-');
+    const row = document.createElement('div');
+    row.className = 'item';
+    row.innerHTML = `
+      <div class="name">${it.n}</div>
+      <div class="price">AED ${it.p.toFixed(2)}</div>
+      ${it.d ? `<div class="desc">${it.d}</div>` : ''}
+      <div class="addrow">
+        <button class="add-btn" id="add-${itemId}" onclick="addToCart('${itemId}','${it.n.replace(/'/g,"\\'")}',${it.p})">Add to order</button>
+        <div class="qty-stepper" id="stepper-${itemId}">
+          <button onclick="changeQty('${itemId}',-1)">−</button>
+          <span class="qty-num" id="qty-${itemId}">0</span>
+          <button onclick="changeQty('${itemId}',1)">+</button>
+        </div>
+      </div>
+    `;
+    section.appendChild(row);
+  });
+
+  wrapEl.appendChild(section);
+});
+
+// ---------- Order mode ----------
+const urlParams = new URLSearchParams(window.location.search);
+const tableNumber = urlParams.get('table');
+
+if(tableNumber){
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('tableBadge').style.display = 'block';
+    document.getElementById('tableNum').textContent = tableNumber;
+  });
+}
+
+let orderMode = 'Dine-in';
+function setMode(mode){
+  orderMode = mode;
+  document.getElementById('mode-dinein').classList.toggle('active', mode === 'Dine-in');
+  document.getElementById('mode-takeaway').classList.toggle('active', mode === 'Pickup');
+  document.getElementById('mode-delivery').classList.toggle('active', mode === 'Delivery');
+  document.getElementById('cartModeNote').textContent = mode;
+}
+
+// ---------- Cart state ----------
+const cart = {}; // itemId -> {name, price, qty}
+
+function addToCart(id, name, price){
+  cart[id] = { name, price, qty: 1 };
+  document.getElementById('add-' + id).style.display = 'none';
+  const stepper = document.getElementById('stepper-' + id);
+  stepper.classList.add('show');
+  document.getElementById('qty-' + id).textContent = '1';
+  refreshCartUI();
+}
+
+function changeQty(id, delta){
+  if(!cart[id]) return;
+  cart[id].qty += delta;
+  if(cart[id].qty <= 0){
+    delete cart[id];
+    document.getElementById('stepper-' + id).classList.remove('show');
+    document.getElementById('add-' + id).style.display = 'inline-block';
+  } else {
+    document.getElementById('qty-' + id).textContent = cart[id].qty;
+  }
+  refreshCartUI();
+}
+
+function cartCountTotal(){
+  return Object.values(cart).reduce((sum, l) => sum + l.qty, 0);
+}
+function cartPriceTotal(){
+  return Object.values(cart).reduce((sum, l) => sum + l.qty * l.price, 0);
+}
+
+function refreshCartUI(){
+  const count = cartCountTotal();
+  document.getElementById('cartFab').classList.toggle('hidden', count === 0);
+  document.getElementById('cartCount').textContent = count;
+
+  const linesEl = document.getElementById('cartLines');
+  const entries = Object.entries(cart);
+  if(entries.length === 0){
+    linesEl.innerHTML = '<div class="cart-empty">Your order is empty. Add something delicious!</div>';
+  } else {
+    linesEl.innerHTML = entries.map(([id, l]) => `
+      <div class="cart-line">
+        <div class="cl-name">${l.name}</div>
+        <div class="cl-controls">
+          <button onclick="changeQty('${id}',-1)">−</button>
+          <span class="qty-num">${l.qty}</span>
+          <button onclick="changeQty('${id}',1)">+</button>
+        </div>
+        <div class="cl-price">AED ${(l.qty * l.price).toFixed(2)}</div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('cartTotal').innerHTML = `<span>Total</span><span>AED ${cartPriceTotal().toFixed(2)}</span>`;
+}
+
+function openCart(){
+  refreshCartUI();
+  document.getElementById('cartOverlay').classList.add('open');
+}
+function closeCart(){
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+
+function sendOrderToWhatsapp(){
+  const entries = Object.entries(cart);
+  if(entries.length === 0){ alert('Add at least one item first.'); return; }
+  let msg = `Hi Sisi's Eatery Arabian Ranches, I'd like to place a ${orderMode} order${tableNumber ? ' (Table ' + tableNumber + ')' : ''}:\n\n`;
+  entries.forEach(([id, l]) => {
+    msg += `${l.qty}x ${l.name} — AED ${(l.qty * l.price).toFixed(2)}\n`;
+  });
+  msg += `\nTotal: AED ${cartPriceTotal().toFixed(2)}`;
+  const url = `https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+
+  closeCart();
+  document.getElementById('updatesPrompt').style.display = 'block';
+  document.getElementById('trackerView').style.display = 'none';
+  document.getElementById('trackOverlay').classList.add('open');
+}
+
+function closeTracker(){
+  document.getElementById('trackOverlay').classList.remove('open');
+  if(trackTimer) clearInterval(trackTimer);
+}
+function declineTracking(){ closeTracker(); }
+
+let trackTimer = null;
+const STAGE_LABELS = {
+  'Dine-in':    ['Order received','Preparing','Plating up','Served'],
+  'Pickup':     ['Order received','Preparing','Ready soon','Ready for pickup'],
+  'Delivery':   ['Order received','Preparing','On the way','Arrived'],
+};
+const STAGE_MINUTES = { 'Dine-in':15, 'Pickup':20, 'Delivery':30 };
+
+function startTracking(){
+  document.getElementById('updatesPrompt').style.display = 'none';
+  document.getElementById('trackerView').style.display = 'block';
+
+  const labels = STAGE_LABELS[orderMode] || STAGE_LABELS['Delivery'];
+  [0,1,2,3].forEach(i => {
+    document.querySelector(`#st-${i} .label`).textContent = labels[i];
+    document.getElementById(`st-${i}`).classList.remove('done');
+  });
+  document.getElementById('trackFill').style.width = '0%';
+
+  const initialMinutes = STAGE_MINUTES[orderMode] || 30;
+  document.getElementById('etaLabel').textContent = 'Estimated time';
+  document.getElementById('etaMins').textContent = initialMinutes + ' min';
+
+  // Demo runs in ~60 real seconds and simulates the full estimated wait
+  const demoDurationMs = 60000;
+  const stepMs = 200;
+  const totalSteps = demoDurationMs / stepMs;
+  let step = 0;
+
+  if(trackTimer) clearInterval(trackTimer);
+  trackTimer = setInterval(() => {
+    step += 1;
+    const pct = Math.min(step / totalSteps, 1);
+    document.getElementById('trackFill').style.width = (pct*100) + '%';
+
+    const remainingMin = Math.ceil(initialMinutes * (1 - pct));
+    document.getElementById('etaMins').textContent = pct < 1 ? remainingMin + ' min' : 'Arrived';
+
+    const stageIdx = Math.min(Math.floor(pct * 4), 3);
+    for(let i=0;i<=stageIdx;i++) document.getElementById(`st-${i}`).classList.add('done');
+
+    if(pct >= 1){
+      clearInterval(trackTimer);
+      document.getElementById('etaLabel').textContent = labels[3];
+    }
+  }, stepMs);
+}
+</script>
+
+</body>
+</html>
